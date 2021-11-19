@@ -1,14 +1,41 @@
-import { renderBlock, renderToast } from './lib.js'
+import { renderBlock } from './lib.js'
+
+interface SearchFormData {
+  city: string,
+  checkin: Date,
+  checkout: Date,
+  maxPrice: number
+}
+
+export interface Place {
+
+}
+
+interface SearchCallback {
+  (error?: Error, places?: Place[]): void
+}
+
+export function search(searchData: SearchFormData, callback: SearchCallback): void {
+  console.log(`City: ${searchData.city}, Check-in: ${searchData.checkin}, Check-out: ${searchData.checkout}, Max Price: ${searchData.maxPrice}`)
+  new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (Math.random() < 0.5)
+        resolve({})
+      else
+        reject(new Error('Test Error!'))
+    }, 2000)
+  }).then((places: Place[]) => callback(null, places)).catch((error: Error) => callback(error))
+}
 
 export function renderSearchFormBlock(checkin?: Date, checkout?: Date) {
-  let today = new Date()
+  const today = new Date()
 
   checkin = (checkin) ? checkin : new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2)
   checkout = (checkout) ? checkout : new Date(checkin.getFullYear(), checkin.getMonth(), checkin.getDate() + 2)
 
-  let max = new Date(today.getFullYear(), today.getMonth() + 2, 1)
+  const max = new Date(today.getFullYear(), today.getMonth() + 2, 1)
 
-  let formatDate = (date: Date): string => {
+  const formatDate = (date: Date): string => {
     return `${date.toISOString().substr(0, 10)}`
   }
 

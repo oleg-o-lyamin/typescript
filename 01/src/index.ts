@@ -1,10 +1,21 @@
-import { renderSearchFormBlock } from './search-form.js'
+import { renderSearchFormBlock, search, Place } from './search-form.js'
 import { renderSearchStubBlock } from './search-results.js'
-import { renderUserBlock } from './user.js'
+import { renderUserBlock, getUserData, getFavouritesAmount } from './user.js'
 import { renderToast } from './lib.js'
+import { localStorage } from './storage.js'
 
 window.addEventListener('DOMContentLoaded', () => {
-  renderUserBlock('Wade Warren', '/img/avatar.png', 0)
+  const userData = getUserData(localStorage)
+
+  // проверка работы search
+  search({ city: '123', checkin: new Date(), checkout: new Date(), maxPrice: 5 }, (error?: Error, places?: Place[]) => {
+    if (error && places == null)
+      console.log(error.message)
+    else
+      console.log(places)
+  })
+
+  renderUserBlock(userData.username, userData.avatarUrl, getFavouritesAmount(localStorage))
   renderSearchFormBlock()
   renderSearchStubBlock()
   renderToast(
