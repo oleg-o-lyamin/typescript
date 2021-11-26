@@ -27,11 +27,10 @@ export function search(searchData: SearchFormData, callback: SearchCallback): vo
   }).then((places: Place[]) => callback(null, places)).catch((error: Error) => callback(error))
 }
 
+
+
 export function renderSearchFormBlock(checkin?: Date, checkout?: Date) {
   const today = new Date()
-
-  checkin = (checkin) ? checkin : new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2)
-  checkout = (checkout) ? checkout : new Date(checkin.getFullYear(), checkin.getMonth(), checkin.getDate() + 2)
 
   const max = new Date(today.getFullYear(), today.getMonth() + 2, 1)
 
@@ -58,11 +57,11 @@ export function renderSearchFormBlock(checkin?: Date, checkout?: Date) {
         <div class="row">
           <div>
             <label for="check-in-date">Дата заезда</label>
-            <input id="check-in-date" type="date" value="${formatDate(checkin)}" min="${formatDate(today)}" max="${formatDate(max)}" name="checkin" />
+            <input id="check-in-date" type="date" min="${formatDate(today)}" max="${formatDate(max)}" name="checkin" />
           </div>
           <div>
             <label for="check-out-date">Дата выезда</label>
-            <input id="check-out-date" type="date" value="${formatDate(checkout)}" min="${formatDate(today)}" max="${formatDate(max)}" name="checkout" />
+            <input id="check-out-date" type="date" min="${formatDate(today)}" max="${formatDate(max)}" name="checkout" />
           </div>
           <div>
             <label for="max-price">Макс. цена суток</label>
@@ -76,4 +75,27 @@ export function renderSearchFormBlock(checkin?: Date, checkout?: Date) {
     </form>
     `
   )
+
+  const check_in_elem = <HTMLInputElement>document.getElementById('check-in-date')
+  const check_out_elem = <HTMLInputElement>document.getElementById('check-out-date')
+
+  const changeDates = (date1?: Date, date2?: Date): void => {
+    const d1 = date1 || new Date(check_in_elem.value)
+    let d2 = date2 || new Date(check_out_elem.value)
+
+    if (d1 > d2) {
+      d2 = new Date(d1.getFullYear(), d1.getMonth(), d1.getDate() + 2)
+    }
+
+    check_in_elem.value = formatDate(d1)
+    check_out_elem.value = formatDate(d2)
+  }
+
+  check_in_elem.addEventListener('change', () => { changeDates() }) 
+  check_out_elem.addEventListener('change', () => { changeDates() })
+
+  changeDates(checkin || new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2),
+    checkout || new Date(today.getFullYear(), today.getMonth(), today.getDate() + 4))
 }
+
+

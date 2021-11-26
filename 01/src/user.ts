@@ -3,7 +3,7 @@ import { Storage } from './storage.js'
 
 export function renderUserBlock(username: string, pathToAvatar: string, favoriteItemsAmount = 0) {
   const favoritesCaption = favoriteItemsAmount > 0 ? favoriteItemsAmount : 'ничего нет'
-  const hasFavoriteItems = favoriteItemsAmount > 0 ? true : false
+  const hasFavoriteItems = favoriteItemsAmount > 0
 
   renderBlock(
     'user-block',

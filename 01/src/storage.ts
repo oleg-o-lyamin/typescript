@@ -14,4 +14,4 @@ export class Storage {
   }
 }
 
-export const localStorage: Storage = new Storage('Wade Warren', '/img/avatar.png', 1)
+export const localStorage: Storage = new Storage('Wade Warren', './img/avatar.png', 1)

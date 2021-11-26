@@ -22,4 +22,37 @@ window.addEventListener('DOMContentLoaded', () => {
     { text: 'Это пример уведомления. Используйте его при необходимости', type: 'success' },
     { name: 'Понял', handler: () => { console.log('Уведомление закрыто') } }
   )
+
+
+
+  //
+  // Задание 3
+  //
+
+
+  interface Todo {
+    userId: number
+    id: number
+    title: string
+    completed: boolean
+  }
+
+  function getTodosByCount(count: number) {
+    return fetch('https://jsonplaceholder.typicode.com/todos')
+      .then((response) => {
+        return response.text()
+      })
+      .then<Todo[]>((responseText) => {
+        return JSON.parse(responseText)
+      })
+      .then((data) => {
+        return data.slice(0, count)
+      })
+  }
+
+  getTodosByCount(20).then((response) => {
+    response.forEach((todo) => {
+      console.log(`userId: ${todo.userId}, id: ${todo.id}, title: ${todo.title}, completed: ${todo.completed}`)
+    })
+  }).catch((error) => { console.error(error) })
 })
