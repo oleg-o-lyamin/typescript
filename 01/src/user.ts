@@ -1,5 +1,4 @@
 import { renderBlock } from './lib.js'
-import { Storage } from './storage.js'
 
 export function renderUserBlock(username: string, pathToAvatar: string, favoriteItemsAmount = 0) {
   const favoritesCaption = favoriteItemsAmount > 0 ? favoriteItemsAmount : 'ничего нет'
@@ -21,18 +20,12 @@ export function renderUserBlock(username: string, pathToAvatar: string, favorite
   )
 }
 
-export function getUserData(storage: unknown) {
-  if (storage instanceof Storage) {
-    return storage.user
-  }
-  else
-    console.error('Not a proper storage')
+export function getUserData() {
+  const data = JSON.parse(window.localStorage.getItem('user'))
+  return data
 }
 
-export function getFavouritesAmount(storage: unknown) {
-  if (storage instanceof Storage) {
-    return storage.favouritesAmount
-  }
-  else
-    console.error('Not a proper storage')
+export function getFavouritesAmount() {
+  const data = JSON.parse(window.localStorage.getItem('favouritesAmount'))
+  return data
 }
