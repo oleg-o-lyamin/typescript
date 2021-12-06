@@ -1,0 +1,39 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "rules": {
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "indent": [
+            "error",
+            2
+        ],
+        "no-unused-vars": [
+            "off"
+        ],
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            {
+                "vars": "all",
+                "args": "all"
+            }
+        ],
+        "@typescript-eslint/no-empty-interface": [
+            "off" // иначе ругается на пустой Place в search-form.ts
+        ]
+    },
+    "env": {
+        "browser": true,
+        "node": true
+    }
+}
