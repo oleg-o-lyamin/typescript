@@ -21,11 +21,11 @@ export function renderUserBlock(username: string, pathToAvatar: string, favorite
 }
 
 export function getUserData() {
-  const data = JSON.parse(window.localStorage.getItem('user'))
-  return data
+  const item = window.localStorage.getItem('user')
+  return (item != null) ? JSON.parse(item) : null
 }
 
 export function getFavouritesAmount() {
-  const data = JSON.parse(window.localStorage.getItem('favouritesAmount'))
-  return data
+  const item = window.localStorage.getItem('favouritesAmount')
+  return (item != null) ? JSON.parse(item) : null
 }

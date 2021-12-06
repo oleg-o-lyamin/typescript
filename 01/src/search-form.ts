@@ -12,15 +12,15 @@ export interface Place {
 }
 
 interface SearchCallback {
-  (error?: Error, places?: Place[]): void
+  (error?: Error | null, places?: Place[]): void
 }
 
 export function search(searchData: SearchFormData, callback: SearchCallback): void {
   console.log(`City: ${searchData.city}, Check-in: ${searchData.checkin}, Check-out: ${searchData.checkout}, Max Price: ${searchData.maxPrice}`)
-  new Promise((resolve, reject) => {
+  new Promise<Place[]>((resolve, reject) => {
     setTimeout(() => {
       if (Math.random() < 0.5)
-        resolve({})
+        resolve([])
       else
         reject(new Error('Test Error!'))
     }, 2000)
@@ -91,7 +91,7 @@ export function renderSearchFormBlock(checkin?: Date, checkout?: Date) {
     check_out_elem.value = formatDate(d2)
   }
 
-  check_in_elem.addEventListener('change', () => { changeDates() }) 
+  check_in_elem.addEventListener('change', () => { changeDates() })
   check_out_elem.addEventListener('change', () => { changeDates() })
 
   changeDates(checkin || new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2),

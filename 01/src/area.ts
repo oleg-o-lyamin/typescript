@@ -6,8 +6,8 @@ export abstract class MyGraphicsPrimitive2D {
 }
 
 export abstract class MyAreaPrimitive2D extends MyGraphicsPrimitive2D {
-  protected _area: number
-  public get area(): number { return this._area }
+  protected _area: number | null = null
+  public get area(): number | null { return this._area }
   protected abstract calculateArea(): void
 }
 
